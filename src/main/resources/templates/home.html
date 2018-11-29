@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Open AI</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--Date picker-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet"/>
+
+    <script>
+        $(document).ready(function () {
+            $('#datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+            });
+        });
+    </script>
+    <script src="/script.js"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="row" id="header-filter">
+    <div class="nav navbar-right">
+        <div class="col-md-7">
+            <input type="text" class="form-control" id="datepicker" th:value="${time}"/>
+        </div>
+        <div class="col-md-3">
+            <button id="btn-filter" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div id="content-tab">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#1" data-toggle="tab">Giáo dục</a>
+            </li>
+            <li>
+                <a href="#2" data-toggle="tab">Thể thao</a>
+            </li>
+            <li>
+                <a href="#3" data-toggle="tab">Giải trí</a>
+            </li>
+            <li>
+                <a href="#4" data-toggle="tab">Thế giới</a>
+            </li>
+            <li>
+                <a href="#5" data-toggle="tab">Xã hội</a>
+            </li>
+            <li>
+                <a href="#6" data-toggle="tab">Văn hóa</a>
+            </li>
+            <li>
+                <a href="#7" data-toggle="tab">Đời sống</a>
+            </li>
+            <li>
+                <a href="#8" data-toggle="tab">Pháp luật</a>
+            </li>
+            <li>
+                <a href="#9" data-toggle="tab">Kinh tế</a>
+            </li>
+            <li>
+                <a href="#10" data-toggle="tab">Nhà đất</a>
+            </li>
+            <li>
+                <a href="#11" data-toggle="tab">Khoa học</a>
+            </li>
+            <li>
+                <a href="#12" data-toggle="tab">Công nghệ</a>
+            </li>
+            <li>
+                <a href="#13" data-toggle="tab">Xe cộ</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="1">
+                <div  th:each="data_gd:${data_gd}" class="car" >
+                    <p th:text="${data_gd.event_name}+' - '+ ${data_gd.num_story} " class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_gd.event_id}" ></p>
+                    <div th:attr="id=${data_gd.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_gd.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_gd.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_gd.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="2">
+                <div  th:each="data_tt:${data_tt}" class="border-parent" >
+                    <p th:text="${data_tt.event_name}+' - '+ ${data_tt.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_tt.event_id}" ></p>
+                    <div th:attr="id=${data_tt.event_id}" class="row collapse stories-content" >
+                       <div class="col-md-7 stories-text">
+                           <div th:each="stories: ${data_tt.stories}" >
+                               <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                           </div>
+                       </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_tt.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_tt.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="3">
+                <div  th:each="data_gt:${data_gt}" class="border-parent" >
+                    <p th:text="${data_gt.event_name}+' - '+ ${data_gt.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_gt.event_id}" ></p>
+                    <div th:attr="id=${data_gt.event_id}" class="row collapse stories-content">
+                       <div class="col-md-7 stories-text">
+                           <div th:each="stories: ${data_gt.stories}" >
+                               <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                           </div>
+                       </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_gt.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_gt.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="4">
+                <div  th:each="data_tg:${data_tg}" class="border-parent" >
+                    <p th:text="${data_tg.event_name}+' - '+ ${data_tg.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_tg.event_id}" ></p>
+                    <div th:attr="id=${data_tg.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_tg.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_tg.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_tg.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="5">
+                <div  th:each="data_xh:${data_xh}" class="border-parent" >
+                    <p th:text="${data_xh.event_name}+' - '+ ${data_xh.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_xh.event_id}" ></p>
+                    <div th:attr="id=${data_xh.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_xh.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_xh.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_xh.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="6">
+                <div  th:each="data_vh:${data_vh}" class="border-parent" >
+                    <p th:text="${data_vh.event_name}+' - '+ ${data_vh.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_vh.event_id}" ></p>
+                    <div th:attr="id=${data_vh.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_vh.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_vh.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_vh.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="7">
+                <div  th:each="data_ds:${data_ds}" class="border-parent" >
+                    <p th:text="${data_ds.event_name}+' - '+ ${data_ds.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_ds.event_id}" ></p>
+                    <div th:attr="id=${data_ds.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_ds.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_ds.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_ds.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="8">
+                <div  th:each="data_pl:${data_pl}" class="border-parent" >
+                    <p th:text="${data_pl.event_name}+' - '+ ${data_pl.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_pl.event_id}" ></p>
+                    <div th:attr="id=${data_pl.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_pl.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_pl.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_pl.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="9">
+                <div  th:each="data_kt:${data_kt}" class="border-parent" >
+                    <p th:text="${data_kt.event_name}+' - '+ ${data_kt.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_kt.event_id}" ></p>
+                    <div th:attr="id=${data_kt.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_kt.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_kt.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_kt.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="10">
+                <div  th:each="data_nd:${data_nd}" class="border-parent" >
+                    <p th:text="${data_nd.event_name}+' - '+ ${data_nd.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_nd.event_id}" ></p>
+                    <div th:attr="id=${data_nd.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_nd.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_nd.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_nd.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="11">
+                <div  th:each="data_kh:${data_kh}" class="border-parent"  >
+                    <p th:text="${data_kh.event_name}+' - '+ ${data_kh.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_kh.event_id}" ></p>
+                    <div th:attr="id=${data_kh.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_kh.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_kh.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_kh.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="12">
+                <div  th:each="data_cn:${data_cn}" class="border-parent" >
+                    <p th:text="${data_cn.event_name}+' - '+ ${data_cn.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_cn.event_id}" ></p>
+                    <div th:attr="id=${data_cn.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_cn.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_cn.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_cn.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="13">
+                <div  th:each="data_xc:${data_xc}" class="border-parent" >
+                    <p th:text="${data_xc.event_name}+' - '+ ${data_xc.num_story}" class="text-parent" data-toggle="collapse" th:attr="data-target='#'+${data_xc.event_id}" ></p>
+                    <div th:attr="id=${data_xc.event_id}" class="row collapse stories-content">
+                        <div class="col-md-7 stories-text">
+                            <div th:each="stories: ${data_xc.stories}" >
+                                <p th:text="${stories.title} +' ('+ ${stories.date} +')'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="child_events">
+                                <p style="font-size: 18px; font-weight: bold" th:if="${data_xc.child_events.size()} != 0">Child Event</p>
+                                <div th:each="child_events: ${data_xc.child_events}">
+                                    <p th:text="${child_events.event_name} +' ('+ ${child_events.date} +')'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
